@@ -186,12 +186,12 @@ It can be optimised at mutiple levels:
 
 An **Error Boundary** is a React component that catches JavaScript errors in the **component tree below it** and displays a **fallback UI** instead of crashing the entire app.
 
-### ✅ It catches:
+# ✅ It catches:
 - Rendering errors
 - Lifecycle errors
 - Constructor errors of child components
 
-### ❌ It doesn't catch:
+# ❌ It doesn't catch:
 - Errors in event handlers
 - Asynchronous code (e.g., `setTimeout`)
 - Server-side rendering errors
@@ -199,11 +199,11 @@ An **Error Boundary** is a React component that catches JavaScript errors in the
 
 ---
 
-## 🛠️ How to Implement an Error Boundary
+# 🛠️ How to Implement an Error Boundary
 
 Error boundaries must be class components (as of React 18).
 
-### Basic Example:
+# Basic Example:
 
 ```jsx
 class ErrorBoundary extends React.Component {
@@ -230,6 +230,21 @@ class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
+```
+# Usage
+
+```jsx
+   <ErrorBoundary fallback={<div>Oops! Custom Error UI</div>}>
+     <ComponentThatMightCrash />
+   </ErrorBoundary>
+```
+```jsx
+   render() {
+     if (this.state.hasError) {
+       return this.props.fallback || <h2>Something went wrong.</h2>;
+     }
+     return this.props.children;
+   }
 ```
 
 
