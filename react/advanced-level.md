@@ -165,8 +165,72 @@ It can be optimised at mutiple levels:
 ## How do you make sure the security in react app?
 
 
+## What are some of the design patterns used in react o share logic and organize components more effectively?
+
+1. Render Props Pattern:
+      - A render prop is a technique for sharing code between React components using a function that returns a React element.
+
+2. Container / Presentational Pattern (Smart/Dumb Components):
+      - This is about separating logic from UI. The idea is to isolate the data-fetching/state-management logic (container) from the UI layout (presentational).
+
+3. Higher-Order Components (HOC):
+      - A function that takes a component and returns a new component with added behavior.
+  
+4. Hooks Pattern (Modern React):
+      - With React hooks, especially useState and useEffect, you can share logic through custom hooks instead of HOCs or render props. 
 
 
+## What are error boundaries and how is that implemented?
+
+## What is an Error Boundary?
+
+An **Error Boundary** is a React component that catches JavaScript errors in the **component tree below it** and displays a **fallback UI** instead of crashing the entire app.
+
+### ✅ It catches:
+- Rendering errors
+- Lifecycle errors
+- Constructor errors of child components
+
+### ❌ It doesn't catch:
+- Errors in event handlers
+- Asynchronous code (e.g., `setTimeout`)
+- Server-side rendering errors
+- Errors inside the error boundary itself
+
+---
+
+## 🛠️ How to Implement an Error Boundary
+
+Error boundaries must be class components (as of React 18).
+
+### Basic Example:
+
+```jsx
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so next render shows fallback UI
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Log the error (to console or error reporting services)
+    console.error("Error caught by ErrorBoundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h2>Something went wrong.</h2>;
+    }
+
+    return this.props.children;
+  }
+}
+```
 
 
 
