@@ -60,7 +60,64 @@
 
 
 ## How do you acheive Lazy Loading in React?
+React Suspense is a powerful feature that allows components to **"wait"** for something before rendering — like code-splitting or even **asynchronous data** — while showing a fallback (like a loading spinner or skeleton UI).
 
+Suspense lets you **defer rendering** part of the component tree **until some condition is met**, like loading a component or fetching data.
+
+```jsx
+  <Suspense fallback={<div>Loading...</div>}>
+    <MyLazyComponent />
+  </Suspense>
+```
+## ✅ What It Can Do
+
+- Lazy-load components using `React.lazy()`
+- Show fallback UIs (like spinners or skeletons)
+- Work with data-fetching libraries that support Suspense (React Query, Relay)
+- Enable streaming server rendering in React 18+
+- Improve perceived performance using `startTransition()`
+
+---
+
+## ❌ What It Can't Do (Yet)
+
+- Suspense **does not natively support `fetch()`** or regular async calls in components
+- It **won’t catch event handler errors**
+- **You still need class components** for error boundaries
+- You must use **compatible libraries** for data fetching (like React Query or Relay)
+
+---
+
+## 🧩 Use Case Table
+
+| Use Case                        | Supported       | Description                                                                 |
+|---------------------------------|------------------|-----------------------------------------------------------------------------|
+| `React.lazy()` (code-splitting) | ✅ Yes           | Lazy-load components with built-in support using `React.lazy()`            |
+| Component fallback UI           | ✅ Yes           | Show fallback UI while waiting for a component or resource to load         |
+| API calls using `fetch()`       | ❌ Not directly  | Requires integration with Suspense-ready libraries (e.g., React Query)     |
+| Data fetching with React Query  | ✅ Yes           | Supported via `suspense: true` in query options                            |
+| Data fetching with Relay        | ✅ Yes           | Built-in support for Suspense-driven data loading                          |
+| Server Components (Next.js)     | ✅ Yes           | Use experimental `use()` hook for server-side data loading                 |
+| Event handler errors            | ❌ No            | Suspense doesn't catch errors in event handlers                            |
+| State transitions with `startTransition` | ✅ Yes | Improves UX by deferring non-urgent updates                                |
+| Streaming server rendering (SSR)| ✅ Yes           | Supported in React 18 and frameworks like Next.js                          |
+
+---
+
+## 🔧 Sample Usage – Lazy-loading a Component
+
+```jsx
+import React, { Suspense, lazy } from 'react';
+
+const MyComponent = lazy(() => import('./MyComponent'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MyComponent />
+    </Suspense>
+  );
+}
 
 ## How do one handle routing in react? read query params?
 
